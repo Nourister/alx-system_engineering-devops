@@ -4,9 +4,12 @@
 #    With a sleep 2 in between each iteration
 #    I am invincible!!! when receiving a SIGTERM signal
 
+# Function to handle SIGTERM signal
+trap 'echo "I am invincible!!!"' SIGTERM
+
+# Infinite loop to print "To infinity and beyond"
 while true
 do
 	echo "To infinity and beyond"
 	sleep 2
-	trap 'echo "I am invincible!!!"' SIGTERM 
 done
