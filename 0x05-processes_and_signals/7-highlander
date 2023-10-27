@@ -4,22 +4,9 @@
 #    With a sleep 2 in between each iteration
 #    I am invincible!!! when receiving a SIGTERM signal
 
-# A flag to determine whether to continue the loop or not
-keep_running=true
-
-# Function to handle SIGTERM
-term_handler()
-{
-	echo "I am invincible!!!"
-	keep_running=false
-}
-
-# Trap the SIGTERM signal to call the term_handler function
-trap term_handler SIGTERM
-
-# Infinite loop to display the message
-while $keep_running
+while true
 do
 	echo "To infinity and beyond"
 	sleep 2
+	trap 'echo "I am invincible!!!"' SIGTERM 
 done
