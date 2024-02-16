@@ -4,20 +4,21 @@ of the first 10 hot posts listed for a given subreddit
 """
 import requests
 
-
 def top_ten(subreddit):
-    """Print the titles of the 10 hottest posts on a given subreddit."""
-    url = "https://www.reddit.com/r/{}/hot/.json".format(subreddit)
-    headers = {
-        "User-Agent": "linux:0x16.api.advanced:v1.0.0 (by /u/bdov_)"
-    }
-    params = {
-        "limit": 10
-    }
-    response = requests.get(url, headers=headers, params=params,
-                            allow_redirects=False)
-    if response.status_code == 404:
-        print("None")
-        return
-    results = response.json().get("data")
-    [print(c.get("data").get("title")) for c in results.get("children")]
+    url = f"https://www.reddit.com/r/{subreddit}/hot.json"
+    headers = {'User-Agent': 'MyBot/0.0.1'}  # Custom User-Agent to avoid errors
+    params = {'limit': 10}  # Limiting to 10 posts
+
+    response = requests.get(url, headers=headers, params=params)
+
+    if response.status_code == 200:
+        data = response.json()
+        posts = data['data']['children']
+        if posts:
+            print(f"Top 10 hot posts in r/{subreddit}:")
+            for post in posts:
+                print(post['data']['title'])
+        else:
+            print(f"No posts found in r/{subreddit}")
+    else:
+        print("None")  # Invalid subreddit or request failed
